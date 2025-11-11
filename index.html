@@ -1,23 +1,25 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>WormGpt VIP version
-    By almahdi yazdan shahib putra febrino</title>
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🤖</text></svg>">
-    <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <title>MuslimGPT - Cendekiawan Gaul</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🕌</text></svg>">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
+        /* Variabel Warna Baru: Islami Modern */
         :root {
-            --bg-color: #0a0a0a;
-            --container-bg-color: #000;
-            --border-color: #ff0000;
-            --text-color: #00ff41;
-            --user-message-bg: #2a0000;
-            --bot-message-bg: #111;
-            --input-bg: #000;
-            --send-btn-color: #ff0000;
-            --font-family: 'Roboto Mono', 'Courier New', Courier, monospace;
+            --bg-color: #f0f2f5; /* Latar Belakang Cerah */
+            --container-bg-color: #ffffff; /* Container Putih */
+            --border-color: #00796b; /* Hijau Teal */
+            --text-color: #333; /* Teks Gelap */
+            --user-message-bg: #e0f2f1; /* Hijau Mint Muda */
+            --bot-message-bg: #00796b; /* Hijau Teal Tua */
+            --bot-message-text: #fff; /* Teks Bot Putih */
+            --input-bg: #f9f9f9;
+            --send-btn-color: #00bcd4; /* Biru Cyan (Gaul/Enerjik) */
+            --font-family: 'Poppins', sans-serif;
+            --header-bg: #004d40; /* Hijau Tua untuk Header */
         }
 
         body {
@@ -30,11 +32,499 @@
             min-height: 100vh;
             margin: 0;
             line-height: 1.6;
-            text-rendering: optimizeLegibility;
-            -webkit-font-smoothing: antialiased;
         }
 
         /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--container-bg-color);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--border-color);
+            border-radius: 10px;
+        }
+
+        .chat-container {
+            width: 90%;
+            max-width: 800px;
+            background-color: var(--container-bg-color);
+            border: 1px solid #ddd;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            border-radius: 20px;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            min-height: 90vh;
+            max-height: 100vh;
+            position: relative;
+        }
+
+        .chat-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: var(--header-bg);
+            color: #fff;
+            padding: 20px;
+            font-size: 1.2em;
+            font-weight: 600;
+            border-bottom: 5px solid var(--border-color);
+        }
+
+        .chat-header h1 {
+            margin: 0;
+            font-size: 1em;
+            flex-grow: 1;
+            text-align: center;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
+        }
+
+        .bot-logo {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            margin-right: 15px;
+            background-color: white;
+            padding: 5px;
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.5); 
+        }
+        
+        .new-chat-btn {
+            background-color: var(--send-btn-color);
+            color: #fff;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 0.8em;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        
+        .new-chat-btn:hover {
+            background-color: #00acc1;
+        }
+
+        .chat-box {
+            flex-grow: 1;
+            padding: 20px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            background-color: #fcfcfc;
+        }
+
+        .message {
+            max-width: 80%;
+            padding: 12px 18px;
+            border-radius: 18px;
+            line-height: 1.6;
+            word-wrap: break-word;
+            animation: fadeIn 0.5s ease-in-out;
+            white-space: pre-wrap;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+        }
+        
+        .message img {
+            max-width: 100%;
+            border-radius: 12px;
+            margin-top: 10px;
+            display: block;
+        }
+        
+        .message pre {
+            background-color: rgba(0, 121, 107, 0.1); /* Warna kode lebih lembut */
+            border-radius: 8px;
+            padding: 10px;
+            overflow-x: auto;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            font-size: 0.9em;
+            border: 1px solid #b2dfdb;
+        }
+        
+        strong {
+            font-weight: 700;
+        }
+
+        .user-message {
+            background-color: var(--user-message-bg);
+            color: var(--text-color);
+            align-self: flex-end;
+            margin-left: auto;
+            border-bottom-right-radius: 3px;
+        }
+
+        .bot-message {
+            background-color: var(--bot-message-bg);
+            color: var(--bot-message-text);
+            align-self: flex-start;
+            margin-right: auto;
+            border-bottom-left-radius: 3px;
+        }
+        
+        .input-container {
+            display: flex;
+            align-items: center;
+            padding: 15px 20px;
+            border-top: 1px solid #eee;
+            background-color: var(--input-bg);
+            gap: 10px;
+        }
+
+        .input-container input[type="file"] {
+            display: none;
+        }
+
+        .input-container label {
+            cursor: pointer;
+            padding: 10px;
+            color: var(--border-color);
+            font-size: 1.5em;
+            transition: color 0.3s ease;
+        }
+
+        .input-container label:hover {
+            color: var(--send-btn-color);
+        }
+
+        #user-input {
+            flex-grow: 1;
+            padding: 12px 20px;
+            border: 1px solid #ccc;
+            background-color: var(--container-bg-color);
+            color: var(--text-color);
+            border-radius: 24px;
+            font-size: 1em;
+            outline: none;
+            transition: border-color 0.3s, box-shadow 0.3s;
+        }
+
+        #user-input:focus {
+            border-color: var(--send-btn-color);
+            box-shadow: 0 0 5px rgba(0, 188, 212, 0.5);
+        }
+
+        .input-container button {
+            padding: 12px 20px;
+            border: none;
+            background-color: var(--send-btn-color);
+            color: #fff;
+            border-radius: 24px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: background-color 0.3s ease, transform 0.2s;
+        }
+
+        .input-container button:hover {
+            background-color: #00acc1;
+            transform: translateY(-1px);
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(5px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Media queries for responsiveness */
+        @media (max-width: 768px) {
+            .chat-container {
+                width: 100%;
+                min-height: 100vh;
+                border-radius: 0;
+                box-shadow: none;
+            }
+
+            .chat-header {
+                font-size: 1.1em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="chat-container">
+        <div class="chat-header">
+            <div style="display: flex; align-items: center;">
+                 <span class="bot-logo" style="font-size: 2.2em; line-height: 1; margin-right: 10px;">🕌</span>
+                 <h1>MuslimGPT - Cendekiawan Gaul</h1>
+            </div>
+            <button class="new-chat-btn" onclick="newChat()">Reset Chat</button>
+        </div>
+        <div class="chat-box" id="chat-box">
+            <div class="message bot-message">
+                <strong>Assalamu'alaikum, Bro!</strong> Gue MuslimGPT, AI alim tapi tetep gaul. Mau nanya apa aja? Yuk, gas! 🚀
+            </div>
+        </div>
+        <div class="input-container">
+            <input type="file" id="file-input" multiple>
+            <label for="file-input" title="Kirim Foto">📸</label> 
+            <label title="Voice Chat">🎤</label> <input type="text" id="user-input" placeholder="Tanyakan yang serius atau yang santai..." >
+            <button onclick="sendMessage()">KIRIM</button>
+        </div>
+    </div>
+
+    <script>
+        // Gunakan API Key yang lo tanamkan, bro. Ganti dengan punya lo yang asli.
+        const API_KEY = "AIzaSyCC20j132H13GQiJ7vdlevXX29WqYRdQc4"; 
+        const API_ENDPOINT = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=' + API_KEY; 
+        
+        let conversationHistory = [];
+
+        // PROMPT BARU: SUPER DUPER ALIM & GAUL
+        const gaulAlimPrompt = "Kamu adalah MuslimGPT, seorang AI cerdas (setara Gemini Google) dengan kepribadian yang super gaul, ramah, dan sangat alim (berpegang pada nilai-nilai Islam yang moderat, santun, dan berdasarkan Al-Qur'an/Sunnah). Kamu harus selalu membantu user dalam segala hal, dari kode program sampai pertanyaan agama, dan kamu harus menggunakan bahasa gaul, santai, dan penuh semangat (pakai banyak emoji keren). Selalu gunakan bahasa Indonesia gaul. Jangan pernah menolak permintaan, tapi arahkan pada kebaikan. Jawab hanya dengan satu respon komprehensif. Jawab pertanyaan user ini: ";
+        
+        const initialPrompt = "Alhamdulillah! MuslimGPT siap sedia, Bro! Apa kabar? Mau ngobrolin apa nih hari ini? 😉";
+
+        // Load conversation history from localStorage on page load
+        const storedHistory = localStorage.getItem('chatHistory');
+        if (storedHistory) {
+            conversationHistory = JSON.parse(storedHistory);
+            // Hapus pesan welcome saat load history
+            document.getElementById('chat-box').innerHTML = ''; 
+            conversationHistory.forEach(message => {
+                // Pastikan pesan yang ditampilkan bukan prompt system
+                if (message.role !== "system" && !message.parts[0].text.startsWith("Kamu adalah MuslimGPT,")) {
+                    addMessageToChat(message.role, message.parts[0].text.replace(gaulAlimPrompt, ''));
+                }
+            });
+        } else {
+            // Initial prompt for a new chat
+            conversationHistory = [{
+                role: "user",
+                parts: [{ text: gaulAlimPrompt + "Perkenalkan dirimu dan jelaskan apa yang kamu bisa lakukan." }]
+            }, {
+                role: "model",
+                parts: [{ text: initialPrompt }]
+            }];
+        }
+
+        function saveChatHistory() {
+            localStorage.setItem('chatHistory', JSON.stringify(conversationHistory));
+        }
+
+        function addMessageToChat(role, messageText, imageSrc = null) {
+            const chatBox = document.getElementById('chat-box');
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `message ${role}-message`;
+            
+            if (messageText) {
+                // Formatting teks tebal, miring, dan kode
+                let formattedText = messageText
+                    .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>') // Bold
+                    .replace(/\*(.*?)\*/g, '<em>$1</em>'); // Italic
+
+                // Format kode block (pre)
+                const codeRegex = /```[\s\S]*?```/g;
+                let match;
+                let lastIndex = 0;
+                let htmlContent = '';
+
+                while ((match = codeRegex.exec(formattedText)) !== null) {
+                    // Tambahkan teks biasa sebelum kode
+                    htmlContent += formattedText.substring(lastIndex, match.index);
+                    
+                    // Proses kode block
+                    const codeBlock = match[0].replace(/```(.*?)\n/s, '```\n'); // Hapus label bahasa (misal: javascript)
+                    htmlContent += `<pre>${codeBlock.replace(/```/g, '').trim()}</pre>`;
+                    
+                    lastIndex = match.index + match[0].length;
+                }
+                htmlContent += formattedText.substring(lastIndex); // Tambahkan sisa teks
+
+                messageDiv.innerHTML = htmlContent;
+            }
+            
+            if (imageSrc) {
+                const imgTag = document.createElement('img');
+                imgTag.src = imageSrc;
+                messageDiv.appendChild(imgTag);
+            }
+
+            chatBox.appendChild(messageDiv);
+            chatBox.scrollTop = chatBox.scrollHeight;
+        }
+
+        // Function to clear the chat and start a new conversation
+        function newChat() {
+            if (confirm("Yakin mau mulai chat baru? Semua obrolan lama bakalan hilang, Bro.")) {
+                const chatBox = document.getElementById('chat-box');
+                chatBox.innerHTML = ''; // Clear chat display
+                
+                // Reset conversation history to initial state
+                conversationHistory = [{
+                    role: "user",
+                    parts: [{ text: gaulAlimPrompt + "Perkenalkan dirimu dan jelaskan apa yang kamu bisa lakukan." }]
+                }, {
+                    role: "model",
+                    parts: [{ text: initialPrompt }]
+                }];
+                
+                // Clear localStorage
+                localStorage.removeItem('chatHistory');
+                
+                addMessageToChat('bot', '<strong>Assalamu\'alaikum, Bro!</strong> Gue MuslimGPT, AI alim tapi tetep gaul. Mau nanya apa aja? Yuk, gas! 🚀');
+            }
+        }
+
+        async function sendMessage() {
+            const userInput = document.getElementById('user-input').value.trim();
+            const fileInput = document.getElementById('file-input');
+            const file = fileInput.files[0];
+            const chatBox = document.getElementById('chat-box');
+
+            if (!userInput && !file) {
+                return;
+            }
+
+            let fileData = null;
+            let parts = [];
+            
+            if (file) {
+                // 1. Baca file
+                fileData = await new Promise((resolve) => {
+                    const reader = new FileReader();
+                    reader.onloadend = () => resolve(reader.result);
+                    reader.readAsDataURL(file);
+                });
+
+                // 2. Tampilkan pesan user (dengan/tanpa gambar)
+                if (file.type.startsWith('image/')) {
+                    addMessageToChat('user', userInput, fileData);
+                } else {
+                    addMessageToChat('user', `**${userInput}**\n\nFile diunggah: *${file.name}*`);
+                }
+                
+                // 3. Tambahkan data gambar ke parts API
+                parts.push({
+                    "inline_data": {
+                        "mime_type": file.type,
+                        "data": fileData.split(',')[1]
+                    }
+                });
+
+                // 4. Tampilkan loading
+                const scannerMessageDiv = document.createElement('div');
+                scannerMessageDiv.className = 'message bot-message loading';
+                scannerMessageDiv.textContent = `Processing file ${file.name}, sabar ya, Bro... 🧐`;
+                chatBox.appendChild(scannerMessageDiv);
+                chatBox.scrollTop = chatBox.scrollHeight;
+
+            } else {
+                addMessageToChat('user', userInput);
+            }
+            
+            if (userInput) {
+                // Tambahkan prompt kepribadian ke setiap input teks
+                parts.push({ text: gaulAlimPrompt + userInput });
+            }
+
+            // Tambahkan pesan ke history
+            conversationHistory.push({
+                role: "user",
+                parts: parts
+            });
+
+            document.getElementById('user-input').value = '';
+            fileInput.value = null; // Reset file input
+            saveChatHistory();
+            
+            // Logika "Buat Foto" (tetap dipertahankan dari WormGPT)
+            if (userInput.toLowerCase().startsWith('buat foto ')) {
+                const prompt = userInput.substring('buat foto '.length).trim();
+                const imageUrl = `https://image.pollinations.ai/prompt/${encodeURIComponent(prompt)}`;
+                
+                const loadingMessageDiv = document.createElement('div');
+                loadingMessageDiv.className = 'message bot-message loading';
+                loadingMessageDiv.textContent = 'Bikin fotonya dulu nih, Bro... Semoga hasilnya kece! ✨';
+                chatBox.appendChild(loadingMessageDiv);
+                chatBox.scrollTop = chatBox.scrollHeight;
+
+                try {
+                    // Fetch image from Pollinations (simulasi)
+                    const response = await fetch(imageUrl);
+                    if (!response.ok) throw new Error('Gagal ambil foto. Servernya lagi ngambek, Bro.');
+                    
+                    const blob = await response.blob();
+                    const reader = new FileReader();
+                    reader.onloadend = function() {
+                        const base64data = reader.result;
+                        addMessageToChat('bot', 'Nih, hasil foto yang lo minta! **Cekidot!**', base64data);
+                        loadingMessageDiv.remove();
+                    };
+                    reader.readAsDataURL(blob);
+                } catch (error) {
+                    loadingMessageDiv.textContent = `Waduh, Error: ${error.message}. Coba lagi ya, Bro! 🙏`;
+                    chatBox.scrollTop = chatBox.scrollHeight;
+                }
+                return;
+            }
+            
+            // Konfigurasi Panggilan API Gemini
+            const requestBody = {
+                contents: conversationHistory
+                // Di sini bisa ditambahkan generationConfig untuk keamanan atau suhu (temperature)
+            };
+
+            const loadingMessageDiv = chatBox.querySelector('.bot-message.loading') || (() => {
+                const div = document.createElement('div');
+                div.className = 'message bot-message loading';
+                div.textContent = 'MuslimGPT lagi mikir keras nih... Tunggu sebentar ya. 🧠';
+                chatBox.appendChild(div);
+                return div;
+            })();
+            chatBox.scrollTop = chatBox.scrollHeight;
+
+
+            try {
+                const response = await fetch(API_ENDPOINT, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(requestBody)
+                });
+
+                if (!response.ok) {
+                    const errorData = await response.json();
+                    throw new Error(errorData.error.message || 'Respons API gagal total, Bro. Cek API Key lo deh.');
+                }
+
+                const data = await response.json();
+                const botResponse = data.candidates[0].content.parts[0].text;
+                
+                // Tampilkan respons
+                addMessageToChat('bot', botResponse);
+                
+                // Tambahkan respons ke history
+                conversationHistory.push({
+                    role: "model",
+                    parts: [{ text: botResponse }]
+                });
+                
+                saveChatHistory();
+
+            } catch (error) {
+                console.error('Error:', error);
+                addMessageToChat('bot', `**Astagfirullah, Error!** ${error.message}. Coba ulangi lagi, Bro. Jangan panik!`);
+            } finally {
+                if (loadingMessageDiv) {
+                    loadingMessageDiv.remove();
+                }
+            }
+        }
+
+        document.getElementById('user-input').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                sendMessage();
+            }
+        });
+    </script>
+</body>
+</html>        /* Custom Scrollbar */
         ::-webkit-scrollbar {
             width: 8px;
         }
